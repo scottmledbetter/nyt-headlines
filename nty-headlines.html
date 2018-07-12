@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+    @import url('https://fonts.googleapis.com/css?family=Roboto');
+
+    html {
+        font-family: 'roboto', helvetica;
+        font-weight: 100;
+        color: #212121;
+    }
+
+    h2 {
+        font-size: 1.75rem;
+        font-weight: 900;
+        margin-top: 0;
+        margin-bottom: .75rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+        font-weight: 100;
+        margin-top: .1rem;
+        margin-bottom: 2rem;
+        color: #708090;
+    }
+
+    .headlines {
+        max-width: 36rem;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    </style>
+</head>
+<body>
+    <div class="headlines">
+    </div>
+<script>
+
+const headlines = document.querySelector('.headlines');
+
+async function call(url) {
+    const baseUrl = 'https://api.nytimes.com/';
+    const response = await fetch(baseUrl + url);
+    const data = await response.json();
+    return data; 
+}
+call('svc/topstories/v2/home.json?api-key=bac61607c2d246cab2ac0ca442a57c7a')
+    .then(data => {
+        data.results.forEach(item =>
+            headlines.insertAdjacentHTML('beforeend', 
+            `<h2>${item.title}</h2>
+            <h3>${item.abstract}</h3>`     
+            )
+        );
+    });
+
+</script>
+</body>
+</html
